@@ -51,7 +51,7 @@ function App() {
 
   const [sort, setSort] = useState(false)
   const { search, updateSearch, error } = useSearch()
-  const { movies, getMovies, loading } = useMovies({ search, sort })
+  const { movies, getMovies, loading, error: errorMovies } = useMovies({ search, sort })
   
   const debouncedGetMovies = useCallback(
   debounce(search => {
@@ -111,7 +111,11 @@ function App() {
 
       <main>
         {
-          loading ? <p>Cargando...</p> : <Movies movies={movies} />
+          loading 
+          ? <p>Cargando...</p> 
+          : errorMovies 
+            ? <p>{errorMovies}</p>
+            :<Movies movies={movies} />
         }
       </main>
     </div>
